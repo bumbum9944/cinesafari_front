@@ -1,18 +1,43 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BoxOffice :boxOfficeList = "boxOfficeList"/>
+    <div class="mt-5">
+      <JustForYou/>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BoxOffice from '../components/BoxOffice.vue'
+import JustForYou from '../components/JustForYou.vue'
+import axios from 'axios'
 
 export default {
   name: 'home',
+  data(){
+    return {
+      boxOfficeList: []
+    }
+  },
   components: {
-    HelloWorld
+    BoxOffice,
+    JustForYou
+  },
+  methods: {
+    boxOffice(){
+      const BOXOFFICE_URL = 'http://localhost:8000/api-auth/boxoffice/'
+      axios.get(BOXOFFICE_URL)
+      .then((res)=>{
+        console.log(res)
+        this.boxOfficeList = res.data.boxOfficeResult.weeklyBoxOfficeList
+      })
+      .catch((e)=>{
+        console.log(e)
+      })
+    }
+  },
+  mounted() {
+    this.boxOffice()
   }
 }
 </script>
