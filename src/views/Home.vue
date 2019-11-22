@@ -29,7 +29,8 @@ export default {
       axios.get(BOXOFFICE_URL)
       .then((res)=>{
         console.log(res)
-        this.boxOfficeList = res.data.boxOfficeResult.weeklyBoxOfficeList
+        // this.boxOfficeList = res.data.boxOfficeResult.weeklyBoxOfficeList
+        this.boxOfficeList = res.data
       })
       .catch((e)=>{
         console.log(e)
