@@ -18,6 +18,7 @@
 <script>
 import BoxOfficeModal from './BoxOfficeModal.vue'
 export default {
+  name: "boxoffice",
   data(){
     return {
       modal_show: false

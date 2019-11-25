@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "similarform",
   props: {
    movie: Object
  }

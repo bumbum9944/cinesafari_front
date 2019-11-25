@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div v-else class="login-div col-6 offset-3">
+  <div class="signup-form-page">
+    <div class="login-div col-6 offset-3">
       <div v-if="errors.length" class="error-list alert alert-danger">
         <div v-for="(error, idx) in errors" :key="idx">{{error}}</div>
       </div>
@@ -15,7 +12,7 @@
         <label for="password">PASSWORD</label>
         <input id="password" class="form-control" type="password" v-model="credential.password">
       </div>
-      <button class="btn btn-primary" @click="login">로그인</button>
+      <button class="btn btn-primary" @click="signUp">회원가입</button>
     </div>
   </div>
 </template>
@@ -31,29 +28,19 @@ export default {
         username: '',
         password: ''
       },
-      loading: false,
       errors: [],
     }
   },
   methods: {
-    login(){
+    signUp(){
       if (this.checkForm()) {        
-        console.log('로그인 시도 !!!!!!!!!!!!')
-        axios.post('http://localhost:8000/api-auth-login/', this.credential)
+        axios.post('http://localhost:8000/api-auth/signup/', this.credential)
         .then((res)=>{
           console.log(res)
-          console.log(this.$session)
-          this.loading = true
-          this.$session.start()
-          this.$session.set('jwt', res.data.token)
-
-          // this.$store.dispatch('login', res.data.token)
-  
           router.push('/')
         })
         .catch((e)=>{
           console.log(e)
-          this.loading = true
         })
       }
     },

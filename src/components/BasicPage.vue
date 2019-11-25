@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: "basicpage",
   props: {
     movie: Object
   },

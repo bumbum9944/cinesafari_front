@@ -38,6 +38,7 @@ import BasicPage from "../components/BasicPage"
 import DetailPage from "../components/DetailPage"
 import SimilarPage from "../components/SimilarPage"
 export default {
+  name: "boxofficemodal",
   props: {
     movie: Object
   },
