@@ -12,6 +12,10 @@
         <label for="password">PASSWORD</label>
         <input id="password" class="form-control" type="password" v-model="credential.password">
       </div>
+      <div class="form-group">
+        <label for="password-confirm">PASSWORD 확인</label>
+        <input id="password-confirm" name="password_confirmation" class="form-control" type="password" v-model="credential.passwordConfirm">
+      </div>
       <button class="btn btn-primary" @click="signUp">회원가입</button>
     </div>
   </div>
@@ -26,7 +30,8 @@ export default {
     return {
       credential: {
         username: '',
-        password: ''
+        password: '',
+        passwordConfirm: ''
       },
       errors: [],
     }
@@ -34,7 +39,7 @@ export default {
   methods: {
     signUp(){
       if (this.checkForm()) {        
-        axios.post('http://localhost:8000/api-auth/signup/', this.credential)
+        axios.post('http://localhost:8000/api-auth/signup/', {username: this.credential.username, password: this.credential.password})
         .then((res)=>{
           console.log(res)
           router.push('/')
@@ -48,6 +53,9 @@ export default {
       this.errors = []
       if (this.credential.password.length < 8) {
         this.errors.push("비밀번호는 8글자가 넘어야합니다.")
+      }
+      if (this.credential.password !== this.credential.passwordConfirm) {
+        this.errors.push("비밀번호가 같지 않습니다.")
       }
       if (!this.credential.username) {
         this.errors.push("아이디를 입력해주세요")

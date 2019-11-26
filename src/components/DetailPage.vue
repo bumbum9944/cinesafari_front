@@ -5,23 +5,56 @@
   <div>
     <p>유저평점 : {{movie.userRating}}  관람등급 : {{movie.watchGrade}} / {{movie.showTm}}분</p>
   </div>
+  <hr>
   <div>
-    <p>| 감독 : <span v-for="director in selectedDirectors" :key="director.id">{{director.name}} | </span></p>
-    <p>| 출연 |</p>
-    <p v-for="actor in selectedactors" :key="actor.id">{{actor.name}}</p>
+    <p>{{movie.description}}</p>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-3">
+      <p>| 감독 : <span v-for="director in selectedDirectors" :key="director.id">{{director.name}} | </span></p>
+      <p>| 출연 |</p>
+      <p v-for="actor in selectedactors" :key="actor.id">{{actor.name}}</p>
+    </div>
+    <div v-if="reviewList.length" :id="`carou-${movie.id}`" class="carousel slide col-9 d-flex justify-content-center my-auto" data-ride="carousel">
+      <div class="carousel-item active">
+        <p>작성자 : {{reviewList[0].username}}</p>
+        <p>평점 : {{reviewList[0].score}}점</p>
+        <p>감상평 : {{reviewList[0].content}}</p>
+        <span v-if="reviewList[0].username===nowuser" @click="update">✏️</span><span v-if="reviewList[0].username===nowuser" @click="remove">❌</span>
+      </div>
+      <div v-for="review in selectedreviews" :key="review.id" class="carousel-item">
+        <p>작성자 : {{review.username}}</p>
+        <p>평점 : {{review.score}}점</p>
+        <p>감상평 : {{review.content}}</p>
+        <span v-if="reviewList[0].username===nowuser" @click="update">✏️</span><span v-if="reviewList[0].username===nowuser" @click="remove">❌</span>
+      </div>
+      <a class="carousel-control-prev" :href="`#carou-${movie.id}`" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" :href="`#carou-${movie.id}`" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
   </div>
 </div>
 </template>
 
 <script>
+import jwtDecode from "jwt-decode"
+
 export default {
   name: "detailpage",
   data(){
     return {
+      reviewShow: false
     }
   },
   props: {
-    movie: Object
+    movie: Object,
+    reviewList: Array
   },
   computed: {
     selectedDirectors(){
@@ -30,6 +63,34 @@ export default {
     selectedactors(){
       return this.movie.actors.slice(0, 10)
     },
+    selectedreviews(){
+      if (this.reviewList.length === 0){
+        return null
+      }
+      return this.reviewList.slice(1)
+    },
+    nowuser(){
+      const token = this.$session.get('jwt')
+      return jwtDecode(token).username
+    }
+  },
+  methods: {
+    reviewShowCheck(){
+      if (this.reviewList.length === 0){
+        this.reviewShow = false
+      } else {
+        this.reviewShow = true
+      }
+    },
+    update(){
+      
+    },
+    remove(){
+
+    },
+  },
+  mounted(){
+    this.reviewShowCheck()
   }
 }
 </script>

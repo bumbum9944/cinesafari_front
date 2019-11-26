@@ -11,6 +11,7 @@
 import BoxOffice from '../components/BoxOffice.vue'
 import JustForYou from '../components/JustForYou.vue'
 import axios from 'axios'
+// import jwtDecode from 'jwt-decode'
 
 export default {
   name: 'home',
@@ -28,7 +29,7 @@ export default {
       const BOXOFFICE_URL = 'http://localhost:8000/api-auth/boxoffice/'
       axios.get(BOXOFFICE_URL)
       .then((res)=>{
-        console.log(res)
+        // console.log(res)
         // this.boxOfficeList = res.data.boxOfficeResult.weeklyBoxOfficeList
         this.boxOfficeList = res.data
       })

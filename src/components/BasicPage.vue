@@ -3,8 +3,13 @@
     <h2>{{movie.title}}</h2>
     <h4>{{movie.subtitle}}</h4>
     <div>
-      <p>유저평점 : {{movie.userRating}}  관람등급 : {{movie.watchGrade}} / {{movie.showTm}}분</p>
+      <p>유저평점 : {{movie.userRating}} {{movie.watchGrade}} / {{movie.showTm}}분</p>
     </div>
+    <hr>
+    <div>
+      <p>{{movie.descript_point}}</p>
+    </div>
+    <hr>
     <div>
       <p>| 감독 : <span v-for="director in selectedDirectors" :key="director.id">{{director.name}} | </span></p>
       <p>| 출연 : <span v-for="actor in selectedactors" :key="actor.id">{{actor.name}} | </span></p>
@@ -21,6 +26,7 @@ export default {
   },
   computed: {
     selectedDirectors(){
+      // console.log(this.movie)
       return this.movie.directors.slice(0, 1)
     },
     selectedactors(){

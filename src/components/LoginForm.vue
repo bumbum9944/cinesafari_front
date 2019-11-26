@@ -13,7 +13,7 @@
       </div>
       <div class="form-group">
         <label for="password">PASSWORD</label>
-        <input id="password" class="form-control" type="password" v-model="credential.password">
+        <input id="password" name="password" class="form-control" type="password" v-model="credential.password">
       </div>
       <button class="btn btn-primary" @click="login">로그인</button>
     </div>
@@ -29,7 +29,7 @@ export default {
     return {
       credential: {
         username: '',
-        password: ''
+        password: '',
       },
       loading: false,
       errors: [],
@@ -41,8 +41,6 @@ export default {
         console.log('로그인 시도 !!!!!!!!!!!!')
         axios.post('http://localhost:8000/api-auth-login/', this.credential)
         .then((res)=>{
-          console.log(res)
-          console.log(this.$session)
           this.loading = true
           this.$session.start()
           this.$session.set('jwt', res.data.token)
