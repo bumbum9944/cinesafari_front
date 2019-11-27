@@ -1,13 +1,9 @@
 <template>
   <div class="JustForYou mx-3">
-    <hr>
     <h2 class="mb-4">추천영화목록</h2>
-    <div class="card" style="width: 18rem;">
-      <img src="" class="card-img-top" alt="">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="row">
+      <div v-for="(justForYou, idx) in justForYouList" :key="idx" class="card col-2 mx-2 my-2 p-0 border-0" style="width: 18rem;">
+        <img :src="justForYou.image" class="card-img-top" alt="" style="height: 100%;">
       </div>
     </div>
   </div>
@@ -18,10 +14,20 @@ export default {
   name: 'justforyou',
   props: {
     // 추천 영화 제목, 개봉일, 이미지
-  }
+    justForYouList: Array
+  },
+  data(){
+    return {
+      modal_show: false
+    }
+  },
+  components: {
+  },
 }
 </script>
 
 <style>
-
+  .card-img-top {
+    display: block
+  }
 </style>

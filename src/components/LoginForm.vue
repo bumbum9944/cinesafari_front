@@ -38,7 +38,7 @@ export default {
   methods: {
     login(){
       if (this.checkForm()) {        
-        console.log('로그인 시도 !!!!!!!!!!!!')
+        // console.log('로그인 시도 !!!!!!!!!!!!')
         axios.post('http://localhost:8000/api-auth-login/', this.credential)
         .then((res)=>{
           this.loading = true

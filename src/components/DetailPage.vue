@@ -3,7 +3,7 @@
   <h2>{{movie.title}}</h2>
   <h4>{{movie.subtitle}}</h4>
   <div>
-    <p>유저평점 : {{movie.userRating}}  관람등급 : {{movie.watchGrade}} / {{movie.showTm}}분</p>
+    <p>유저평점 : {{movie.userRating}} | 관람등급 : {{movie.watchGrade}} | {{movie.showTm}}분</p>
   </div>
   <hr>
   <div>
@@ -21,13 +21,11 @@
         <p>작성자 : {{reviewList[0].username}}</p>
         <p>평점 : {{reviewList[0].score}}점</p>
         <p>감상평 : {{reviewList[0].content}}</p>
-        <span v-if="reviewList[0].username===nowuser" @click="update">✏️</span><span v-if="reviewList[0].username===nowuser" @click="remove">❌</span>
       </div>
       <div v-for="review in selectedreviews" :key="review.id" class="carousel-item">
         <p>작성자 : {{review.username}}</p>
         <p>평점 : {{review.score}}점</p>
         <p>감상평 : {{review.content}}</p>
-        <span v-if="reviewList[0].username===nowuser" @click="update">✏️</span><span v-if="reviewList[0].username===nowuser" @click="remove">❌</span>
       </div>
       <a class="carousel-control-prev" :href="`#carou-${movie.id}`" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -43,7 +41,8 @@
 </template>
 
 <script>
-import jwtDecode from "jwt-decode"
+// import jwtDecode from "jwt-decode"
+import axios from "axios"
 
 export default {
   name: "detailpage",
@@ -69,10 +68,11 @@ export default {
       }
       return this.reviewList.slice(1)
     },
-    nowuser(){
-      const token = this.$session.get('jwt')
-      return jwtDecode(token).username
-    }
+    // nowuser(){
+    //   this.$session.start()
+    //   const token = this.$session.get('jwt')
+    //   return jwtDecode(token).username
+    // }
   },
   methods: {
     reviewShowCheck(){
@@ -85,7 +85,30 @@ export default {
     update(){
       
     },
-    remove(){
+    remove(review){
+      this.$session.start()
+      const token = this.$session.get('jwt')
+      const reqeustHeader = {
+        headers: {
+          Authorization: "JWT " + token
+        }
+      }
+      axios.delete(`http://localhost:8000/api-auth/review-delete/${review.id}/`, reqeustHeader)
+      .then((res)=>{
+        console.log(res)
+        const targetReview = this.reviewList.find(function(el){
+          return el === review
+        })  
+        const idx = this.reviewList.indexOf(targetReview)
+
+        if (idx > -1) {
+          this.reviewList.splice(idx, 1)
+        }
+
+      })
+      .catch((e)=>{
+        console.log(e)
+      })
 
     },
   },

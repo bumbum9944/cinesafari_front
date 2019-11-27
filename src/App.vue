@@ -1,15 +1,58 @@
 <template>
-  <div id="app">
-    <div class="text-center" id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">login</router-link> |
-      <router-link to="/signup">signup</router-link>
+  <div id="app" style="background-color: #343536;">
+    <div style="background-color: black;">
+      <div class="logo">
+        <br>
+        <br>
+        <h1 class="ml-5">CineSafari</h1>
+      </div>
+      <div class="text-center pt-0" id="nav">
+        <router-link to="/">Home </router-link> 
+        <router-link v-if="!nowuser" to="/login">| login </router-link>
+        <router-link v-if="!nowuser" to="/signup">| signup </router-link>
+        <span id="logout" v-if="nowuser" @click="logout">| logout </span>
+        <router-link v-if="nowuser" to="/userPage">| {{userName}} </router-link> 
+      </div>
     </div>
-    <div class="">
-      <router-view/>
+    <div class="mt-4">
+      <router-view :key="$route.fullpath"/>
     </div>
   </div>
 </template>
+
+<script>
+import jwtDecode from "jwt-decode"
+export default {
+  data(){
+    return {
+      nowuser: this.$session.has('jwt'),
+      userName: ""
+    }
+  },
+  methods: {
+    logout(){
+      this.nowuser = false
+      this.$session.destroy();
+      this.$router.push('/');
+    },
+    userNameFind(){
+      if (this.nowuser){
+        const token = this.$session.get('jwt')
+        const decodedToken = jwtDecode(token)
+        this.userName = decodedToken.username
+      }
+    }
+  },
+  updated(){
+    this.nowuser = this.$session.has('jwt'),
+    this.userNameFind()
+  },
+  mounted(){
+    this.nowuser = this.$session.has('jwt'),
+    this.userNameFind()
+  }
+}
+</script>
 
 <style>
 #app {
@@ -17,7 +60,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-  color: #2c3e50;
+  color: white;
+}
+
+.logo {
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace; 
+  color: white;
 }
 
 #nav {
@@ -25,11 +74,18 @@
 }
 
 #nav a {
+  font-size: 17px;
   font-weight: bold;
-  color: #2c3e50;
+  color: #8aa4be;
+}
+#logout {
+  font-size: 17px;
+  font-weight: bold;
+  color: #8aa4be;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  font-size: 20px;
+  color: #f8faf9;
 }
 </style>

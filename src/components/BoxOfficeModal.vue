@@ -9,11 +9,14 @@
             </button>
           </div>
           <div class="modal-body">
-            <BasicPage v-show="basic" :movie="movie"/>
-            <DetailPage v-show="detail" :movie="movie" :reviewList="reviewList"/>
-            <SimilarPage v-show="similar" :movie="movie"/>
-            <ReviewCreationForm v-show="review" @createReview="createReview"/>
-            <button type="button" v-show="reviewButton" class="btn btn-outline-light" @click="reviewPage">리뷰쓰기</button>
+            <div class=img-cover-div><img :src="movie.thumbnail" alt=""></div>
+            <div class="content">
+              <BasicPage v-show="basic" :movie="movie"/>
+              <DetailPage v-show="detail" :movie="movie" :reviewList="reviewList"/>
+              <SimilarPage v-show="similar" :movie="movie"/>
+              <ReviewCreationForm class="review-create" v-show="review" @createReview="createReview"/>
+              <button type="button" v-show="reviewButton" class="btn btn-outline-light" @click="reviewPage">리뷰쓰기</button>
+            </div>
           </div>
           <div class="modal-footer">
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -36,11 +39,10 @@ import BasicPage from "../components/BasicPage.vue"
 import DetailPage from "../components/DetailPage.vue"
 import SimilarPage from "../components/SimilarPage.vue"
 import ReviewCreationForm from "../components/ReviewCreationForm.vue"
-import router from '../router'
 export default {
   name: "boxofficemodal",
   props: {
-    movie: Object
+    movie: Object,
   },
   components: {
     BasicPage,
@@ -64,6 +66,7 @@ export default {
       this.detail = false
       this.similar = false
       this.review = false
+      this.reviewButton = true
       
     },
     detailPage(){
@@ -71,12 +74,14 @@ export default {
       this.detail = true
       this.similar = false
       this.review = false
+      this.reviewButton = true
     },
     similarPage(){
       this.basic = false
       this.detail = false
       this.similar = true
       this.review = false
+      this.reviewButton = true
     },
     reviewPage(){
       this.review = true
@@ -90,12 +95,6 @@ export default {
       this.detail = false
       this.similar = false
       this.review = false
-    },
-    checkLoggedIn(){
-      this.$session.start()
-      if (!this.$session.has('jwt')) {
-        router.push('/login')
-      }
     },
     createReview(reviewData){
       this.review = false
@@ -121,7 +120,7 @@ export default {
 
       axios.post('http://localhost:8000/api-auth/review-create/', requestForm, requestHeader)
       .then((res)=>{
-        console.log(res)
+        // console.log(res)
         this.reviewList.push(res.data)
       })
       .catch((e)=>{
@@ -139,7 +138,7 @@ export default {
 
       axios.get(`http://localhost:8000/api-auth/reviews/${this.movie.id}/`, requestHeader)
       .then((res)=>{
-        console.log(res)
+        // console.log(res)
         this.reviewList = res.data
       })
       .catch((e)=>{
@@ -152,12 +151,38 @@ export default {
     }
   },
   mounted(){
-    this.checkLoggedIn()
     this.getReviews()
+  },
+  updated(){
+    
   }
 }
 </script>
 
 <style>
+img {
+  height: 100%;
+  width: 100%;
+}
+.modal-body {
+  position: relative;
+  height: 90vh;
+}
+.modal-footer {
+  z-index: 2;
+}
+.img-cover-div {
+  opacity: 0.6;
+  z-index: 1;
+}
 
+.content {
+  position: absolute;
+  top: 5%;
+  z-index: 2;
+}
+.review-create {
+  top: 50%;
+  left: 50%;
+}
 </style>

@@ -60,7 +60,7 @@ export default {
       if (!this.credential.username) {
         this.errors.push("아이디를 입력해주세요")
       }
-      console.log(this.errors)
+      // console.log(this.errors)
       if (this.errors.length === 0) {
         return true
       }
