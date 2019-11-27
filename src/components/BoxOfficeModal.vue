@@ -81,7 +81,7 @@ export default {
       this.detail = false
       this.similar = true
       this.review = false
-      this.reviewButton = true
+      this.reviewButton = false
     },
     reviewPage(){
       this.review = true
