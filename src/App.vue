@@ -19,6 +19,7 @@
     <div class="mt-4">
       <router-view :key="$route.fullpath"/>
     </div>
+    <div style="height: 300px;"></div>
   </div>
 </template>
 

@@ -202,7 +202,7 @@ img {
 }
 .modal-body {
   position: relative;
-  height: 85vh;
+  height: 100vh;
 }
 .modal-footer {
   z-index: 2;

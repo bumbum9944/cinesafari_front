@@ -1,6 +1,6 @@
 <template>
-  <div class="userPageView">
-    <h1>여기는 유저페이지</h1>
+  <div class="userPageView mx-3">
+    <h1 class="">{{userNm}}'s Page</h1>
     <MyReviewList :myReviewList="myReviewList"/>
     <!-- <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F25306D475647024305991C" style="height: 100%;" alt=""> -->
   </div>
@@ -14,7 +14,8 @@ export default {
   name: 'MserPageView',
   data(){
     return {
-      myReviewList: []
+      myReviewList: [],
+      userNm: ""
     }
   },
   props: {
@@ -28,7 +29,7 @@ export default {
       const token = this.$session.get('jwt')
       const decodedToken = jwtDecode(token)
       const user_id = decodedToken.user_id
-
+      this.userNm = decodedToken.username
       const requestHeader = {
         headers: {
           Authorization: 'JWT ' + token

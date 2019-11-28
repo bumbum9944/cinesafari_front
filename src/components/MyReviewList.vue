@@ -1,7 +1,7 @@
 <template>
   <div class="my-reviwe-list">
     <div class="row">
-      <div v-for="review in myReviewList" :key="review.id" class="col-3 mx-2 p-0">
+      <div v-for="review in myReviewList" :key="review.id" class="col-2 mx-2 p-0">
         <div class="card bg-dark text-white m-2 border-0">
           <img id="myReviewCard" :src="review.image" class="card-img-top" alt="">
           <div class="card-img-overlay">
