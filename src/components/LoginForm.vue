@@ -5,7 +5,7 @@
         <h2>존재하지 않는 사용자입니다.</h2>
       </div>
     </div>
-    <div v-else class="login-div col-6 offset-3">
+    <div class="login-div col-6 offset-3">
       <div v-if="errors.length" class="error-list alert alert-danger">
         <div v-for="(error, idx) in errors" :key="idx">{{error}}</div>
       </div>
