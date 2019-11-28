@@ -4,7 +4,9 @@
       <div class="logo">
         <br>
         <br>
-        <h1 class="ml-5">CineSafari</h1>
+        <div class="ml-5 ">
+          <h1 class="pb-0">CineSafari</h1>
+        </div>
       </div>
       <div class="text-center pt-0" id="nav">
         <router-link to="/">Home </router-link> 
