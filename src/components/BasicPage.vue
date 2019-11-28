@@ -1,19 +1,24 @@
 <template>
   <div class="movie-basic-page">
-    <h2>{{movie.title}}</h2>
-    <h4>{{movie.subtitle}}</h4>
     <div>
-      <p>유저평점 : {{movie.userRating}} {{movie.watchGrade}} / {{movie.showTm}}분</p>
+      <h2>{{movie.title}}</h2>
+      <h4>{{movie.subtitle}}</h4>
+      <div>
+        <p>유저평점 : {{movie.userRating}} {{movie.watchGrade}} / {{movie.showTm}}분</p>
+      </div>
+      <hr>
+      <div>
+        <p>{{movie.descript_point}}</p>
+      </div>
+      <hr>
+      <div>
+        <p>| 감독 : <span v-for="director in selectedDirectors" :key="director.id">{{director.name}} | </span></p>
+        <p>| 출연 : <span v-for="actor in selectedactors" :key="actor.id">{{actor.name}} | </span></p>
+        <p>| 장르 : <span v-for="genre in movie.genres" :key="genre.id">{{genre.name}} | </span></p>
+      </div>
     </div>
-    <hr>
     <div>
-      <p>{{movie.descript_point}}</p>
-    </div>
-    <hr>
-    <div>
-      <p>| 감독 : <span v-for="director in selectedDirectors" :key="director.id">{{director.name}} | </span></p>
-      <p>| 출연 : <span v-for="actor in selectedactors" :key="actor.id">{{actor.name}} | </span></p>
-      <p>| 장르 : <span v-for="genre in movie.genres" :key="genre.id">{{genre.name}} | </span></p>
+      <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${movie.video}`" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
 </template>

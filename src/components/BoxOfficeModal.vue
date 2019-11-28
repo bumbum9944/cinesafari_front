@@ -20,8 +20,8 @@
           </div>
           <div class="modal-footer">
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-outline-light" @click="basicPage">기본정보</button>
-              <button type="button" class="btn btn-outline-light" @click="detailPage">상세보기</button>
+              <button type="button" class="btn btn-outline-light" @click="detailPage">기본정보</button>
+              <button type="button" class="btn btn-outline-light" @click="basicPage">상세보기</button>
               <button type="button" class="btn btn-outline-light" @click="similarPage">비슷한영화</button>
             </div>
           </div>
@@ -202,7 +202,7 @@ img {
 }
 .modal-body {
   position: relative;
-  height: 90vh;
+  height: 85vh;
 }
 .modal-footer {
   z-index: 2;
