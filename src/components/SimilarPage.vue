@@ -1,15 +1,21 @@
 <template>
   <div class="movie-similar-page">
-    <h1>여기는 비슷한영화 추천 페이지</h1>
+    <h1>이 영화들은 어떠세요</h1>
+    <SimilarMovie :similarList="similarList"/>
   </div>
 </template>
 
 <script>
+import SimilarMovie from './SimilarMovie.vue'
 export default {
-  name: "similarform",
+  name: "similarPage",
   props: {
-   movie: Object
- }
+    similarList: Array
+  },
+  components: {
+    SimilarMovie
+  },
+
 }
 </script>
 

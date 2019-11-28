@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+    <div v-if="loading" class="" role="">
+      <div class="alert alert-danger" role="alert">
+        <h2>존재하지 않는 사용자입니다.</h2>
+      </div>
     </div>
     <div v-else class="login-div col-6 offset-3">
       <div v-if="errors.length" class="error-list alert alert-danger">

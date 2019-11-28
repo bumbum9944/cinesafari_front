@@ -20,7 +20,9 @@ export default {
     return {
       boxOfficeList: [],
       justForYouList: [],
-      user_id: 0
+      user_id: 1,
+      intervalid1: '',
+      intervalid2: ''
     }
   },
   props: {
@@ -53,7 +55,6 @@ export default {
       const FORYOU_URL = `http://localhost:8000/api-auth/recommand/${this.user_id}/`
       axios.get(FORYOU_URL)
       .then((res)=>{
-        console.log(res)
         // this.boxOfficeList = res.data.boxOfficeResult.weeklyBoxOfficeList
         this.justForYouList = res.data
       })
@@ -66,5 +67,8 @@ export default {
     this.boxOffice()
     this.justForYou()
   },
+  updated(){
+  this.justForYou()
+  }
 }
 </script>

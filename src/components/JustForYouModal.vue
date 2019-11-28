@@ -1,6 +1,6 @@
 <template>
   <div class="box-office-detail">
-    <div class="modal fade" tabindex="-1" role="dialog" :id="`movie-${movie.boxoffice}`" data-keyboard="false">
+    <div class="modal fade" tabindex="-1" role="dialog" :id="`justForYou-${justForYou.id}`" data-keyboard="false">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content text-white" style="background-color: black;">
           <div class="modal-header">
@@ -9,11 +9,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class=img-cover-div><img :src="movie.thumbnail" alt=""></div>
+            <div class=img-cover-div><img :src="justForYou.thumbnail" alt=""></div>
             <div class="content">
-              <BasicPage v-show="basic" :movie="movie"/>
-              <DetailPage v-show="detail" :movie="movie" :reviewList="reviewList"/>
-              <SimilarPage class="similar-content" v-show="similar" :similarList="similarList"/>
+              <BasicPage v-show="basic" :movie="justForYou"/>
+              <DetailPage v-show="detail" :movie="justForYou" :reviewList="reviewList"/>
+              <SimilarPage v-show="similar" :similarList="similarList"/>
               <ReviewCreationForm class="review-create" v-show="review" @createReview="createReview"/>
               <button type="button" v-show="reviewButton" class="btn btn-outline-light" :data-dismiss="dataDismiss" :aria-label="ariaLabel" @click="reviewPage">리뷰쓰기</button>
             </div>
@@ -40,9 +40,9 @@ import DetailPage from "../components/DetailPage.vue"
 import SimilarPage from "../components/SimilarPage.vue"
 import ReviewCreationForm from "../components/ReviewCreationForm.vue"
 export default {
-  name: "boxofficemodal",
+  name: "justforyoumodal",
   props: {
-    movie: Object,
+    justForYou: Object,
   },
   components: {
     BasicPage,
@@ -87,7 +87,7 @@ export default {
       this.similar = true
       this.review = false
       this.reviewButton = false
-      axios.get(`http://localhost:8000/api-auth/similar/${this.movie.id}/`)
+      axios.get(`http://localhost:8000/api-auth/similar/${this.justForYou.id}/`)
       .then((res)=>{
         console.log(res)
         this.similarList = res.data
@@ -132,7 +132,7 @@ export default {
 
       const requestForm = new FormData()
       requestForm.append('user', user_id)
-      requestForm.append('movie', this.movie.id)
+      requestForm.append('movie', this.justForYou.id)
       requestForm.append('content', reviewData.content)
       requestForm.append('score', reviewData.score)
 
@@ -154,7 +154,7 @@ export default {
         }
       }
 
-      axios.get(`http://localhost:8000/api-auth/reviews/${this.movie.id}/`, requestHeader)
+      axios.get(`http://localhost:8000/api-auth/reviews/${this.justForYou.id}/`, requestHeader)
       .then((res)=>{
         // console.log(res)
         this.reviewList = res.data
